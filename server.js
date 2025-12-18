@@ -11,15 +11,21 @@ const userRoutes = require('./routes/userroute');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Database connection (FIXED)
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Database connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err.message));
 
-app.use(cors());
-app.use(express.json());
+// Root route ✅
+app.get('/', (req, res) => {
+  res.send('Amusement Park Ticket Booking Backend is Live 🚀');
+});
 
-// Routes
+// API Routes
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/rides', rideRoutes);
 app.use('/api/products', productRoutes);
