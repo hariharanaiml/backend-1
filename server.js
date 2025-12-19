@@ -13,19 +13,30 @@ const PORT = process.env.PORT || 5000;
 
 // CORS Configuration
 const corsOptions = {
-  origin: [
-    'http://localhost:3000', 
-    'http://localhost:5173', 
-    'http://127.0.0.1:3000', 
-    'http://127.0.0.1:5173',
-    'https://fro-ntend1.vercel.app',
-    'https://frontend1.vercel.app',
-    'https://frontend-nine-xi-69.vercel.app'
-  ],
-  credentials: true,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000', 
+      'http://localhost:5173', 
+      'http://127.0.0.1:3000', 
+      'http://127.0.0.1:5173',
+      'https://fro-ntend1.vercel.app',
+      'https://frontend1.vercel.app',
+      'https://frontend-nine-xi-69.vercel.app'
+    ];
+    
+    if (allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: false,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 };
 
 // Middleware
