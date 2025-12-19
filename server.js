@@ -11,9 +11,26 @@ const userRoutes = require('./routes/userroute');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS Configuration
+const corsOptions = {
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:5173', 
+    'http://127.0.0.1:3000', 
+    'http://127.0.0.1:5173',
+    'https://fro-ntend1.vercel.app',
+    'https://frontend1.vercel.app'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI)
