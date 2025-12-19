@@ -19,7 +19,8 @@ const corsOptions = {
     'http://127.0.0.1:3000', 
     'http://127.0.0.1:5173',
     'https://fro-ntend1.vercel.app',
-    'https://frontend1.vercel.app'
+    'https://frontend1.vercel.app',
+    'https://frontend-nine-xi-69.vercel.app'
   ],
   credentials: true,
   optionsSuccessStatus: 200,
